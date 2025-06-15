@@ -10,11 +10,29 @@ services:
       - ./core/search:/app/search
     ports:
       - '8000:80'
-    tty: true
-    stdin_open: true
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost/health']
       interval: 30s
       timeout: 5s
       retries: 3
+  
+  scrapper-service:
+      build:
+        context: .
+        dockerfile: core/scrapper/Dockerfile
+      container_name: scrapper-service
+      env_file:
+        - ./core/scrapper/.env
+      volumes:
+        - ./core/scrapper:/app/scrapper
+      ports:
+        - '8001:8001'
+      tty: true
+      stdin_open: true
+      restart: unless-stopped
+      healthcheck:
+        test: ['CMD', 'curl', '-f', 'http://localhost/health']
+        interval: 30s
+        timeout: 5s
+        retries: 3

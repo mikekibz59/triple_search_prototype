@@ -18,6 +18,5 @@ class SearchService:
         try:
             return self.provider.search(query)
         except GoogleSearchException as e:
-            # Log once here; API layer will convert to HTTP status
             logging.error("SearchService error: %s", e)
             raise e
