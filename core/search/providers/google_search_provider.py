@@ -20,7 +20,7 @@ class GoogleSearchProvider(SearchProvider):
         self._max_pages = int(config.GOOGLE_QUERY_MAX_PAGES)
 
     def _build_params(self, query: SearchQuery, page: int) -> typing.Dict[str, typing.Any]:
-        query_string = f'"{query.company_size}"' f'"{query.commodity}"' f'"{query.location}"'
+        query_string = f'"{query.company_size}"' f'"{query.commodity}"' f'"{query.geo}"'
         return {
             "q": query_string,
             "num": 10,
@@ -57,7 +57,7 @@ class GoogleSearchProvider(SearchProvider):
                             url=item["link"],
                             snippet=item.get("snippet", ""),
                             source_url=item["link"],
-                            matched_terms=[query.commodity, query.location, query.company_size],
+                            matched_terms=[query.commodity, query.geo, query.company_size],
                             score=rank,
                         )
                     )

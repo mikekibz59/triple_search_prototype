@@ -12,7 +12,7 @@ class SearchProvider(ABC):
         and returns a list of result records.
 
         Args:
-            query: A combined search string including commodity, location,
+            query: A combined search string including commodity, geo,
                 and company size.
 
         Returns:

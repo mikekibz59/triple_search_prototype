@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 class SearchQuery(BaseModel):
     commodity: str
-    location: str
+    geo: str
     company_size: str
 
 
