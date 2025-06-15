@@ -11,6 +11,8 @@ WORKDIR /app
 COPY core/search/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN crawl4ai-setup
+
 # -------- copy service code --------
 RUN mkdir /app/search
 
