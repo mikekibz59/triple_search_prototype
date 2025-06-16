@@ -1,0 +1,182 @@
+[
+	{
+		"domain": "iko.com",
+		"linkedIn": "https://www.linkedin.com/company/iko-industries/",
+		"name": "IKO Industries",
+		"description": "Global manufacturer of roofing, waterproofing and insulation products.",
+		"commodity": ["roofing", "building materials"],
+		"size": "large",
+		"geo": "Calgary, AB"
+	},
+	{
+		"domain": "flexport.com",
+		"linkedIn": "https://www.linkedin.com/company/flexport/",
+		"name": "Flexport",
+		"description": "Digital freight forwarder providing end-to-end global logistics solutions.",
+		"commodity": "freight forwarding",
+		"size": "large",
+		"geo": "San Francisco, CA"
+	},
+	{
+		"domain": "shipbob.com",
+		"linkedIn": "https://www.linkedin.com/company/shipbob/",
+		"name": "ShipBob",
+		"description": "E‑commerce fulfillment platform for DTC brands, offering distributed warehousing.",
+		"commodity": "order fulfillment",
+		"size": "medium",
+		"geo": "Chicago, IL"
+	},
+	{
+		"domain": "mvp-logistics.com",
+		"linkedIn": "https://www.linkedin.com/company/mvp-logistics/",
+		"name": "MVP Logistics",
+		"description": "Third‑party logistics provider specializing in temperature‑controlled freight.",
+		"commodity": "refrigerated shipping",
+		"size": "medium",
+		"geo": "Minneapolis, MN"
+	},
+	{
+		"domain": "costcobusinessdelivery.com",
+		"linkedIn": null,
+		"name": "Costco Business Center",
+		"description": "Wholesale delivery arm of Costco, supplying small businesses with bulk goods.",
+		"commodity": ["wholesale", "bulk supplies"],
+		"size": "large",
+		"geo": "Issaquah, WA"
+	},
+	{
+		"domain": "uline.com",
+		"linkedIn": "https://www.linkedin.com/company/uline/",
+		"name": "Uline",
+		"description": "Supplier of shipping, packaging and industrial supplies across North America.",
+		"commodity": "shipping supplies",
+		"size": "large",
+		"geo": "Pleasant Prairie, WI"
+	},
+	{
+		"domain": "coyote.com",
+		"linkedIn": "https://www.linkedin.com/company/coyote-logistics/",
+		"name": "Coyote Logistics",
+		"description": "UPS‑owned 3PL offering truckload, LTL and intermodal freight services.",
+		"commodity": "truckload shipping",
+		"size": "large",
+		"geo": "Chicago, IL"
+	},
+	{
+		"domain": "expeditors.com",
+		"linkedIn": "https://www.linkedin.com/company/expeditors/",
+		"name": "Expeditors International",
+		"description": "Global logistics company providing air, ocean and ground transportation.",
+		"commodity": "global logistics",
+		"size": "large",
+		"geo": "Seattle, WA"
+	},
+	{
+		"domain": "convoy.com",
+		"linkedIn": "https://www.linkedin.com/company/convoy/",
+		"name": "Convoy",
+		"description": "Digital freight network connecting shippers with carriers on demand.",
+		"commodity": "digital freight",
+		"size": "medium",
+		"geo": "Seattle, WA"
+	},
+	{
+		"domain": "xpo.com",
+		"linkedIn": "https://www.linkedin.com/company/xpo-logistics/",
+		"name": "XPO Logistics",
+		"description": "Provider of less‑than‑truckload, last mile, and intermodal shipping services.",
+		"commodity": "LTL shipping",
+		"size": "large",
+		"geo": "Greenwich, CT"
+	},
+	{
+		"domain": "maersk.com",
+		"linkedIn": "https://www.linkedin.com/company/maersk-group/",
+		"name": "A.P. Moller – Maersk",
+		"description": "Integrated container logistics company with a global fleet of vessels and terminals.",
+		"commodity": "ocean freight",
+		"size": "large",
+		"geo": "Copenhagen, DK"
+	},
+	{
+		"domain": "ups.com",
+		"linkedIn": "https://www.linkedin.com/company/ups/",
+		"name": "UPS",
+		"description": "Global package delivery and supply chain management company.",
+		"commodity": "parcel shipping",
+		"size": "large",
+		"geo": "Atlanta, GA"
+	},
+	{
+		"domain": "dhl.com",
+		"linkedIn": "https://www.linkedin.com/company/dhl/",
+		"name": "DHL Express",
+		"description": "International express mail and logistics services provider.",
+		"commodity": "express shipping",
+		"size": "large",
+		"geo": "Bonn, DE"
+	},
+	{
+		"domain": "tql.com",
+		"linkedIn": "https://www.linkedin.com/company/total-quality-logistics/",
+		"name": "Total Quality Logistics (TQL)",
+		"description": "Freight brokerage specialising in full truckload and LTL shipments across North America.",
+		"commodity": "freight brokerage",
+		"size": "large",
+		"geo": "Cincinnati, OH"
+	},
+	{
+		"domain": "averitt.com",
+		"linkedIn": "https://www.linkedin.com/company/averitt-express/",
+		"name": "Averitt Express",
+		"description": "Provider of LTL, truckload, and supply chain services in the US and Mexico.",
+		"commodity": "less-than-truckload",
+		"size": "medium",
+		"geo": "Cookeville, TN"
+	},
+	{
+		"domain": "estafeta.com",
+		"linkedIn": "https://www.linkedin.com/company/estafeta/",
+		"name": "Estafeta",
+		"description": "Mexican logistics company offering parcel, freight and cross‑border solutions.",
+		"commodity": "parcel & freight",
+		"size": "medium",
+		"geo": "Mexico City, MX"
+	},
+	{
+		"domain": "pitneybowes.com",
+		"linkedIn": "https://www.linkedin.com/company/pitney-bowes/",
+		"name": "Pitney Bowes",
+		"description": "Technology company providing shipping, mailing, and e‑commerce logistics services.",
+		"commodity": "e‑commerce shipping",
+		"size": "large",
+		"geo": "Stamford, CT"
+	},
+	{
+		"domain": "dsclogistics.com",
+		"linkedIn": "https://www.linkedin.com/company/dsc-logistics/",
+		"name": "DSC Logistics (CJ Logistics)",
+		"description": "Supply chain management and contract logistics provider.",
+		"commodity": "3PL logistics",
+		"size": "large",
+		"geo": "Des Plaines, IL"
+	},
+	{
+		"domain": "rslogistics.com",
+		"linkedIn": "https://www.linkedin.com/company/rs-logistics-limited/",
+		"name": "RS Logistics",
+		"description": "Asian freight forwarder offering air and sea freight with customs brokerage.",
+		"commodity": "freight forwarding",
+		"size": "medium",
+		"geo": "Hong Kong, HK"
+	},
+	{
+		"domain": "roadrunnerllc.com",
+		"linkedIn": "https://www.linkedin.com/company/roadrunner-transportation-services/",
+		"name": "Roadrunner Transportation",
+		"description": "Asset‑light LTL carrier serving major metros across the United States.",
+		"commodity": "LTL carrier",
+		"size": "medium",
+		"geo": "Downers Grove, IL"
+	}
+]

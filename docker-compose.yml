@@ -16,7 +16,7 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-  
+
   scrapper-service:
       build:
         context: .
@@ -46,3 +46,17 @@ services:
       - ./on_demand_prototype:/app/on_demand_prototype
     ports:
       - "8003:8003"
+
+  pre_scraped_prototype:
+    build:
+      context: .
+      dockerfile: pre_scraped_prototype/Dockerfile
+    container_name: pre_scraped_prototype
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
