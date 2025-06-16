@@ -9,7 +9,7 @@ services:
     volumes:
       - ./core/search:/app/search
     ports:
-      - '8000:80'
+      - '8000:8000'
     restart: unless-stopped
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost/health']
@@ -36,3 +36,13 @@ services:
         interval: 30s
         timeout: 5s
         retries: 3
+  
+  on_demand_prototype:
+    build: ./on_demand_prototype
+    container_name: on_demand_prototype
+    env_file:
+      - ./on_demand_prototype/.env
+    volumes:
+      - ./on_demand_prototype:/app/on_demand_prototype
+    ports:
+      - "8003:8003"
