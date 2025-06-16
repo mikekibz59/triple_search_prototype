@@ -11,11 +11,10 @@ WORKDIR /app
 COPY core/search/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN crawl4ai-setup
 
 # -------- copy service code --------
 RUN mkdir /app/search
 
 # -------- runtime options (optional) --------
 # Expose a default port (tiangolo listens on 80 inside the container)
-CMD ["uvicorn", "search.api:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+CMD ["uvicorn", "search.api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
