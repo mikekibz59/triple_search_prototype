@@ -8,13 +8,14 @@ from .config import SCRAPE_URL, SEARCH_URL
 
 app = FastAPI(title="On-demand gateway")
 
+
 class CompanyScrapeInfo(BaseModel):
     title: str
     company_scrape_link: str
 
 
 class ScrapePostParams(BaseModel):
-    extractor: typing.Optional[str] = 'generic'
+    extractor: typing.Optional[str] = "generic"
     scrape_links: typing.List[CompanyScrapeInfo]
 
 
@@ -51,3 +52,4 @@ def triple_search(q: SearchIn):
 
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
+
