@@ -172,3 +172,6 @@ This prototype demonstrates our search API using pre-scraped company data and SQ
 ## Value Delivered
 
 This prototype successfully validates our core assumptions while minimizing development overhead. It proves the API design works, provides a tangible demo for stakeholders, and creates a foundation that can be incrementally upgraded to production quality without breaking client integrations.
+
+# Stuff I'll implement later:
+- To make this project a much better user experience, I would've loved to develop a background jobs for the parsing stage. That way the user doesn't have to wait for the results since the fetch and parse can take minutes to complete depeding on the context size that the LLMS get. 
