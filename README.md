@@ -6,6 +6,12 @@ A minimal prototype for finding mid-sized U.S. shippers by commodity, location, 
 - `pre_scraped_prototype/` – batch scrape → embed → search  
 - `common/` – shared scraping & search modules
 
+## API docs links:
+- First run `docker-compose up` which will fire up the services.
+- To view the API docs, you can use the links below for the different services:
+  - On-demand gateway: http://0.0.0.0:8003/docs
+  - Pre-scraped showcase: http://0.0.0.0:8002/docs 
+
 
 # On-demand prototype – simple scorecard
 
