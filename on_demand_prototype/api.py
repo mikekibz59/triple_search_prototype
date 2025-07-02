@@ -29,7 +29,7 @@ class SearchIn(BaseModel):
 def triple_search(q: SearchIn):
     try:
         # 1. hit Search service
-        resp = requests.post(SEARCH_URL, json=q.model_dump(), timeout=None)
+        resp = requests.post(SEARCH_URL, json=q.model_dump(), timeout=300)
         resp.raise_for_status()
 
         search_results = resp.json() or []
@@ -46,10 +46,9 @@ def triple_search(q: SearchIn):
 
         scrape_payload = ScrapePostParams(scrape_links=company_infos)
 
-        scraped_resp = requests.post(SCRAPE_URL, json=scrape_payload.model_dump(), timeout=None)
-        scrape_payload.raise_for_status()
+        scraped_resp = requests.post(SCRAPE_URL, json=scrape_payload.model_dump(), timeout=300)
+        scraped_resp.raise_for_status()
         return scraped_resp.json()
 
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
-

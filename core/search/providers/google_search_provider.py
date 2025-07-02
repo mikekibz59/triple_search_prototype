@@ -18,12 +18,27 @@ class GoogleSearchProvider(SearchProvider):
         self._api_key = config.GOOGLE_API_KEY
         self._cx = config.GOOGLE_CX
         self._max_pages = int(config.GOOGLE_QUERY_MAX_PAGES)
+        self._num_results = 2
 
     def _build_params(self, query: SearchQuery, page: int) -> typing.Dict[str, typing.Any]:
-        query_string = f'"{query.company_size}"' f'"{query.commodity}"' f'"{query.geo}"'
+        terms = [
+            '(intitle:about OR inurl:about OR intitle:"company profile")',
+            'shipping',
+            '-jobs -careers -hiring',
+            '-filetype:pdf -filetype:xlsx -filetype:csv'
+        ]
+        if query.commodity:
+            terms.append(f'"{query.commodity}"')
+        if query.geo:
+            terms.append(f'"{query.geo}"')
+        if query.company_size:
+            terms.append(f'"{query.company_size}"')
+
+        query_string = " ".join(terms)
+
         return {
             "q": query_string,
-            "num": 10,
+            "num": self._num_results,
             "start": page,
             "gl": "us",
             "fields": "items(link, title, snippet), queries(nextPage/startIndex)",

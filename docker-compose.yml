@@ -8,9 +8,9 @@ services:
       - ./core/search/.env
     volumes:
       - ./core/search:/app/search
-    ports:
-      - '8000:8000'
     restart: unless-stopped
+    tty: true
+    stdin_open: true
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost/health']
       interval: 30s
@@ -18,43 +18,43 @@ services:
       retries: 3
 
   scrapper-service:
-      build:
-        context: .
-        dockerfile: core/scrapper/Dockerfile
-      container_name: scrapper-service
-      env_file:
-        - ./core/scrapper/.env
-      volumes:
-        - ./core/scrapper:/app/scrapper
-      ports:
-        - '8001:8001'
-      tty: true
-      stdin_open: true
-      restart: unless-stopped
-      healthcheck:
-        test: ['CMD', 'curl', '-f', 'http://localhost/health']
-        interval: 30s
-        timeout: 5s
-        retries: 3
+    build:
+      context: .
+      dockerfile: core/scrapper/Dockerfile
+    container_name: scrapper-service
+    env_file:
+      - ./core/scrapper/.env
+    volumes:
+      - ./core/scrapper:/app/scrapper
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
   
-  on_demand_prototype:
+  on-demand-prototype:
     build: ./on_demand_prototype
-    container_name: on_demand_prototype
+    container_name: on-demand-prototype
     env_file:
       - ./on_demand_prototype/.env
     volumes:
       - ./on_demand_prototype:/app/on_demand_prototype
     ports:
       - "8003:8003"
+    tty: true
+    stdin_open: true
 
-  pre_scraped_prototype:
+  pre-scraped-prototype:
     build:
       context: .
       dockerfile: pre_scraped_prototype/Dockerfile
-    container_name: pre_scraped_prototype
-    ports:
-      - "8002:8002"
+    container_name: pre-scraped-prototype
     restart: unless-stopped
+    tty: true
+    stdin_open: true
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]
       interval: 30s

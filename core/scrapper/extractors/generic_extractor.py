@@ -11,7 +11,16 @@ from .. import exceptions
 from ..constants import SupportedBrowersers, SupportedLLMs
 from ..domain import CompanyDetail
 
-from crawl4ai import AsyncWebCrawler, BrowserConfig, CacheMode, CrawlerRunConfig, LLMExtractionStrategy, LLMConfig
+from crawl4ai import (
+    AsyncWebCrawler,
+    BrowserConfig,
+    CacheMode,
+    CrawlerRunConfig,
+    LLMExtractionStrategy,
+    LLMConfig,
+    MemoryAdaptiveDispatcher,
+    RateLimiter,
+)
 
 
 class GenericExtractor(BaseScrapperExtractor):
@@ -24,16 +33,16 @@ class GenericExtractor(BaseScrapperExtractor):
 
     def _get_browser_config(self):
         return BrowserConfig(
-            browser_type=SupportedBrowersers.CHROMIUM.value,  # type of browsers to simulate
-            headless=True,  # Whether to run in headless mode (no GUI)
-            verbose=True,  # capture as much logs of the process as much as possible
+            browser_type=SupportedBrowersers.CHROMIUM.value,
+            headless=True,
+            verbose=True,
             user_agent=(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
             ),
         )
 
-    def _get_llm_strategy(self):
+    def _get_llm_strategy(self) -> LLMExtractionStrategy:
         return LLMExtractionStrategy(
             llm_config=LLMConfig(
                 provider=SupportedLLMs.GROQ_CLOUD_DEEPSEEK_R1.value, api_token=config.GROK_CLOUD_API_KEY
@@ -45,65 +54,62 @@ class GenericExtractor(BaseScrapperExtractor):
                 "and a 1 sentence description as to why this is a good company for sales reps looking for shipping leads"
             ),
             input_format="markdown",
-            verbose=True,  # enable verbose logging.
+            verbose=True,
+            raise_on_error=True,
         )
 
-    async def crawl_company_information(self, links_to_scrape: ScrapePostParams):
-        all_companies = []
+    async def crawl_company_information(self, links: ScrapePostParams):
+        """Bulk-scrape all URLs in one shot with Crawl4AI’s arun_many()."""
+        if not links.scrape_links:
+            return []
 
-        if not links_to_scrape.scrape_links:
-            return all_companies
-
+        urls = [item.company_scrape_link for item in links.scrape_links]
         llm_strategy = self._get_llm_strategy()
 
+        run_cfg = CrawlerRunConfig(
+            cache_mode=CacheMode.BYPASS,
+            extraction_strategy=llm_strategy,
+            session_id=self._session_id,
+            stream=True,
+        )
+
+        dispatcher = MemoryAdaptiveDispatcher(
+            max_session_permit=5,
+            rate_limiter=RateLimiter(base_delay=(1.5, 3.0), max_delay=30.0, max_retries=4),
+        )
+
+        all_companies = []
         async with AsyncWebCrawler(config=self._get_browser_config()) as crawler:
-            for company_scrape_info in links_to_scrape.scrape_links or []:
-
-                company_info = await self._fetch_and_crawl_page(
-                    crawler=crawler,
-                    url=company_scrape_info.company_scrape_link,
-                    llm_strategy=self._get_llm_strategy(),
-                    session_id=self._session_id,
-                )
-
-                if not company_info:
-                    logging.info(
-                        f"No information for available for this site: {company_scrape_info.company_scrape_link}"
-                    )
+            async for result in await crawler.arun_many(urls=urls, config=run_cfg, dispatcher=dispatcher):
+                if not (result.success and result.extracted_content):
+                    logging.error(f"Failed {result.url}: {result.error_message}")
                     continue
 
-                all_companies.extend(company_info)
-                # pause between requests to avoid rate limits
-                await asyncio.sleep(2)
+                try:
+                    companies = json.loads(result.extracted_content)
+                except json.JSONDecodeError:
+                    logging.warning(f"Bad JSON from {result.url}")
+                    continue
+
+                # deals with litellm errors
+                if isinstance(companies, list) and self._is_llm_error(companies):
+                    logging.error("LLM extraction failed on %s → %s", result.url, companies[0]["content"])
+                    continue
+
+                cleaned = [c for c in companies if self._none_empty(c)]
+                all_companies.extend(cleaned)
 
         llm_strategy.show_usage()
         return all_companies
-
-    async def _fetch_and_crawl_page(self, crawler, url, llm_strategy, session_id) -> typing.List[typing.Any]:
-        try:
-            result = await crawler.arun(
-                url=url,
-                config=CrawlerRunConfig(
-                    cache_mode=CacheMode.BYPASS, extraction_strategy=llm_strategy, session_id=session_id
-                ),
-            )
-
-            if not (result.success and result.extracted_content):
-                logging.error(f"Error fetching page: {result.error_message}")
-                return []
-
-            extracted_data = json.loads(result.extracted_content)
-            if not extracted_data:
-                logging.info("No company information found")
-                return []
-
-            return extracted_data
-        except Exception as e:
-            logging.error(f"Error scraping page: {str(e)}")
-            return []
 
     def _generate_unique_session_id(self, length=32):
         alphabet = string.ascii_letters + string.digits
 
         key = "".join(secrets.choice(alphabet) for _ in range(length))
         return key
+
+    def _none_empty(self, company_info: typing.Dict[str, typing.Any]) -> bool:
+        return any(v not in (None, [], "") for v in company_info.values())
+
+    def _is_llm_error(self, payload: typing.List[typing.Dict[str, typing.Any]]) -> bool:
+        return all(isinstance(item, dict) and item.get("error") for item in payload)

@@ -4,13 +4,13 @@ from .service import ScrapperService
 from .exceptions import GenericExtractorImproperlyConfiguredException
 
 app = FastAPI(title="Scrapper Service")
-
+DEFAULT_EXTRACTOR = "generic"
 
 @app.post("/scrape", response_model=list[CompanyDetail])
 async def search_endpoint(q: ScrapePostParams):
     try:
         if not q.extractor:
-            q.extractor = "generic"
+            q.extractor = DEFAULT_EXTRACTOR
 
         service = ScrapperService(q.extractor)
         return await service.run(q)

@@ -20,4 +20,4 @@ class CompanyDetail(BaseModel):
     description: typing.Optional[str] = None
     commodity: typing.Optional[typing.Union[str, typing.List[str]]] = None
     size: typing.Optional[str] = None
-    geo: typing.Optional[str] = None  # this is the city they operate from or headquatered.
+    geo: typing.Optional[typing.Union[str, typing.List[str]]] = None
